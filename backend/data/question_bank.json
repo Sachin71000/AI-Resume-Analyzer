@@ -1,0 +1,195 @@
+{
+  "skills": {
+    "python": {
+      "easy": [
+        {
+          "id": "py_e_1",
+          "question": "What is the difference between lists and tuples in Python?",
+          "ideal_answer": "Lists are mutable, meaning their elements can be modified, added, or removed after creation. They are defined using square brackets []. Tuples are immutable, meaning their elements cannot be changed once created. They are defined using parentheses (). Because tuples are immutable, they are hashable and can be used as dictionary keys, and they are generally slightly faster than lists.",
+          "keywords": ["mutable", "immutable", "brackets", "parentheses", "hashable", "keys", "modify"],
+          "category": "Data Structures"
+        },
+        {
+          "id": "py_e_2",
+          "question": "Explain the difference between 'is' and '==' in Python.",
+          "ideal_answer": "The '==' operator compares the values of two objects to check if they are equal in content. The 'is' operator checks for identity, determining if both variables refer to the exact same object in memory (i.e., have the same memory address / id).",
+          "keywords": ["value", "identity", "memory", "address", "id", "same object", "equal"],
+          "category": "Fundamentals"
+        }
+      ],
+      "medium": [
+        {
+          "id": "py_m_1",
+          "question": "What are decorators in Python and how do they work?",
+          "ideal_answer": "Decorators are a design pattern in Python used to modify or extend the behavior of a function or class without permanently modifying its source code. They are functions that take another function as an argument, define a wrapper function inside, and return that wrapper. They are applied using the '@decorator_name' syntax.",
+          "keywords": ["modify", "extend", "wrapper", "decorator", "syntax", "arguments", "first-class"],
+          "category": "Advanced Features"
+        },
+        {
+          "id": "py_m_2",
+          "question": "Explain list comprehensions and generators in Python. When would you use one over the other?",
+          "ideal_answer": "List comprehensions create a new list in memory by iterating over an iterable, syntax like [x for x in iterable]. Generators use parentheses (x for x in iterable) and produce elements lazily on demand using the 'yield' keyword, which is highly memory-efficient. Use list comprehensions for small data when you need full list operations, and generators for large datasets to avoid memory overhead.",
+          "keywords": ["comprehensions", "generators", "lazy", "yield", "memory", "efficient", "on demand"],
+          "category": "Memory Management"
+        }
+      ],
+      "hard": [
+        {
+          "id": "py_h_1",
+          "question": "Explain the Global Interpreter Lock (GIL) in CPython. How does it affect multithreading and how do you achieve true parallelism?",
+          "ideal_answer": "The GIL is a mutex in CPython that prevents multiple native threads from executing Python bytecodes at once. This protects CPython's memory management from race conditions, but makes multithreading ineffective for CPU-bound tasks. To achieve true parallelism in Python, you must use multiprocessing (which spawns separate OS processes with their own memory spaces and GILs), or execute intensive tasks in C/C++ extensions (like NumPy) which release the GIL.",
+          "keywords": ["GIL", "CPython", "mutex", "bytecode", "multithreading", "parallelism", "multiprocessing", "CPU-bound"],
+          "category": "Advanced Concepts"
+        }
+      ]
+    },
+    "sql": {
+      "easy": [
+        {
+          "id": "sql_e_1",
+          "question": "What is the difference between WHERE and HAVING clauses in SQL?",
+          "ideal_answer": "The WHERE clause is used to filter records before any groupings are made (applied to individual rows). The HAVING clause is used to filter groups of rows after the GROUP BY clause has been applied, and it can filter based on aggregate functions (like SUM, AVG, COUNT).",
+          "keywords": ["filter", "before", "after", "GROUP BY", "aggregate", "rows", "groups"],
+          "category": "Filtering"
+        }
+      ],
+      "medium": [
+        {
+          "id": "sql_m_1",
+          "question": "Explain the difference between INNER JOIN, LEFT JOIN, and RIGHT JOIN.",
+          "ideal_answer": "INNER JOIN returns rows only when there is a match in both tables based on the join condition. LEFT JOIN returns all rows from the left table, and the matched rows from the right table, filling with NULL where there is no match. RIGHT JOIN returns all rows from the right table, and the matched rows from the left table, filling with NULL where there is no match.",
+          "keywords": ["INNER", "LEFT", "RIGHT", "JOIN", "match", "null", "tables"],
+          "category": "Joins"
+        },
+        {
+          "id": "sql_m_2",
+          "question": "What are window functions in SQL and how do they differ from GROUP BY?",
+          "ideal_answer": "Window functions perform calculations across a set of table rows that are related to the current row, using the OVER() clause (e.g., ROW_NUMBER(), RANK(), SUM() OVER). Unlike GROUP BY, which collapses multiple rows into a single summary row, window functions allow you to perform aggregations while retaining all the individual rows in the output.",
+          "keywords": ["window", "OVER", "GROUP BY", "collapse", "rows", "retaining", "calculations"],
+          "category": "Advanced SQL"
+        }
+      ],
+      "hard": [
+        {
+          "id": "sql_h_1",
+          "question": "What are indexes in SQL? Explain the difference between clustered and non-clustered indexes and their impact on write performance.",
+          "ideal_answer": "An index is a database structure that speeds up retrieval queries. A clustered index determines the physical order of data storage in the table (only one per table). A non-clustered index is stored in a separate structure with pointers to the actual data rows (multiple allowed). While indexes speed up reads, they slow down writes (INSERT, UPDATE, DELETE) because the indexes must be updated whenever the data changes.",
+          "keywords": ["index", "clustered", "non-clustered", "physical", "order", "pointers", "write", "speed"],
+          "category": "Optimization"
+        }
+      ]
+    },
+    "machine learning": {
+      "easy": [
+        {
+          "id": "ml_e_1",
+          "question": "Explain the difference between supervised and unsupervised learning.",
+          "ideal_answer": "Supervised learning involves training a model on a labeled dataset, where each training example is paired with its correct output label (e.g., regression, classification). Unsupervised learning involves training a model on an unlabeled dataset, where the model must discover underlying patterns, structures, or groupings on its own (e.g., clustering, dimensionality reduction).",
+          "keywords": ["supervised", "unsupervised", "labeled", "unlabeled", "patterns", "regression", "clustering"],
+          "category": "ML Fundamentals"
+        },
+        {
+          "id": "ml_e_2",
+          "question": "What is overfitting in machine learning and how do you prevent it?",
+          "ideal_answer": "Overfitting occurs when a model learns the training data too well, including its noise and outliers, causing it to perform poorly on unseen test data. To prevent overfitting, you can use regularization (L1/L2), cross-validation, prune decision trees, gather more training data, simplify the model architecture, or use techniques like dropout in deep learning.",
+          "keywords": ["overfitting", "noise", "unseen", "prevent", "regularization", "cross-validation", "dropout"],
+          "category": "ML Fundamentals"
+        }
+      ],
+      "medium": [
+        {
+          "id": "ml_m_1",
+          "question": "Explain the bias-variance tradeoff in machine learning.",
+          "ideal_answer": "The bias-variance tradeoff is the conflict in trying to minimize both error sources. Bias represents errors from simplistic assumptions, leading to underfitting. Variance represents sensitivity to small fluctuations in training data, leading to overfitting. High bias models are too simple, while high variance models are too complex. The goal is to find an optimal balance that minimizes total error on test data.",
+          "keywords": ["bias", "variance", "tradeoff", "underfitting", "overfitting", "error", "complexity"],
+          "category": "Model Performance"
+        },
+        {
+          "id": "ml_m_2",
+          "question": "How does a Random Forest classifier work and what are its advantages?",
+          "ideal_answer": "Random Forest is an ensemble learning method that builds multiple decision trees during training and merges their predictions (using majority voting for classification or averaging for regression). It uses bagging (bootstrap aggregating) to train each tree on a random subset of data and selects random features at each split. Its advantages include reduced overfitting compared to individual decision trees, high accuracy, and ability to handle missing values and feature importance.",
+          "keywords": ["ensemble", "decision trees", "majority voting", "bagging", "bootstrap", "features", "overfitting"],
+          "category": "Ensemble Methods"
+        }
+      ],
+      "hard": [
+        {
+          "id": "ml_h_1",
+          "question": "Explain how gradient descent works. What are the differences between Batch, Stochastic, and Mini-batch gradient descent?",
+          "ideal_answer": "Gradient descent is an optimization algorithm used to minimize a loss function by iteratively updating model weights in the direction of the steepest descent (negative gradient). Batch gradient descent calculates gradients using the entire dataset, which is stable but slow and memory-intensive. Stochastic (SGD) calculates gradients using a single random training sample, which is very fast but highly noisy and fluctuates. Mini-batch gradient descent computes gradients on small batches of data, balancing computational efficiency and convergence stability.",
+          "keywords": ["gradient descent", "minimize", "loss function", "weights", "batch", "stochastic", "SGD", "mini-batch", "convergence"],
+          "category": "Optimization"
+        }
+      ]
+    },
+    "react": {
+      "easy": [
+        {
+          "id": "react_e_1",
+          "question": "What is the Virtual DOM in React and how does it work?",
+          "ideal_answer": "The Virtual DOM is a lightweight, in-memory representation of the real DOM. When a component's state or props change, React creates a new Virtual DOM tree, compares it with the previous one (a process called 'diffing'), and calculates the minimal set of changes. It then updates only those specific parts in the real DOM (called 'reconciliation'), which is much faster than re-rendering the whole page.",
+          "keywords": ["Virtual DOM", "in-memory", "diffing", "reconciliation", "minimal changes", "update", "render"],
+          "category": "React Basics"
+        }
+      ],
+      "medium": [
+        {
+          "id": "react_m_1",
+          "question": "Explain React Hooks (e.g., useState, useEffect). What are the rules of Hooks?",
+          "ideal_answer": "Hooks are functions that let you use state and other React features in functional components. useState manages local component state. useEffect handles side effects like data fetching or subscriptions. The rules of Hooks are: 1) Only call Hooks at the top level (not inside loops, conditions, or nested functions), and 2) Only call Hooks from React function components or custom Hooks.",
+          "keywords": ["Hooks", "useState", "useEffect", "functional", "rules", "top level", "side effects"],
+          "category": "Hooks"
+        }
+      ],
+      "hard": [
+        {
+          "id": "react_h_1",
+          "question": "How does React's reconciliation algorithm work, and how do 'key' props optimize lists?",
+          "ideal_answer": "Reconciliation is React's algorithm to diff the Virtual DOM with the real DOM. React assumes elements of different types will produce different trees, and lists can be optimized using 'key' props. The 'key' prop provides a stable identity to list items across renders. Without keys, React might re-render or re-create entire elements when items shift. With keys, React can track which items were added, removed, or reordered, avoiding unnecessary DOM re-creation.",
+          "keywords": ["reconciliation", "diff", "key prop", "stable identity", "optimize", "renders", "reorder"],
+          "category": "Advanced React"
+        }
+      ]
+    }
+  },
+  "behavioral": [
+    {
+      "id": "bh_1",
+      "question": "Tell me about a time when you had to learn a new technology or tool quickly to complete a project. How did you approach it?",
+      "ideal_answer": "Using the STAR framework, explain the Situation (the project and the tool needed), the Task (what you needed to accomplish), the Action (your structured learning plan, utilizing docs, tutorials, building mini-prototypes, seeking help), and the Result (successful project completion, what you learned, and how it impacted the outcome).",
+      "keywords": ["STAR", "Situation", "Task", "Action", "Result", "learning", "adaptability", "structured", "outcome"],
+      "category": "Adaptability",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_2",
+      "question": "Describe a situation where you had a conflict with a teammate or stakeholder. How did you resolve it?",
+      "ideal_answer": "Using the STAR framework, detail the Situation of disagreement, the Task, the Action (active listening, scheduled a constructive one-on-one, focused on factual trade-offs instead of personal bias, worked towards a compromise or aligned on project goals), and the positive Result (resolved conflict, improved relationship, and successful project progress).",
+      "keywords": ["conflict", "resolution", "listening", "empathy", "compromise", "collaboration", "STAR"],
+      "category": "Collaboration",
+      "difficulty": "medium"
+    }
+  ],
+  "role_based": {
+    "software engineer": [
+      {
+        "id": "role_se_1",
+        "question": "How would you design a URL shortener like bit.ly? What database, caching, and key-generation strategies would you use?",
+        "ideal_answer": "For a URL shortener: Use a Base62 encoding algorithm to map auto-incremented IDs or UUID hashes to short 7-character strings. Store mappings in a NoSQL database (like MongoDB or Cassandra) or an optimized relational database (PostgreSQL) for write scalability. Use Redis to cache the most frequently accessed short URLs to minimize database read latency. Handle collisions by pre-generating unique keys or using a distributed coordinator like ZooKeeper.",
+        "keywords": ["Base62", "Base64", "UUID", "NoSQL", "caching", "Redis", "latency", "collision", "unique keys"],
+        "category": "System Design",
+        "difficulty": "hard"
+      }
+    ],
+    "data scientist": [
+      {
+        "id": "role_ds_1",
+        "question": "If you have a dataset with 40% missing values in a critical numerical feature, how would you handle it?",
+        "ideal_answer": "First, analyze the mechanism of missingness (MCAR, MAR, MNAR). If MNAR, missingness is informative and requires special treatment. If the feature is highly critical, dropping 40% of rows is undesirable. Imputation methods include: median/mean imputation (simple but reduces variance), predictive imputation (using regression or KNN to predict missing values), or advanced algorithms like MICE (Multiple Imputation by Chained Equations). Alternatively, use trees-based models (like XGBoost) that can handle missing values natively, or encode missingness as a binary indicator feature.",
+        "keywords": ["missingness", "MCAR", "MAR", "MNAR", "imputation", "median", "KNN", "MICE", "XGBoost", "indicator"],
+        "category": "Data Preprocessing",
+        "difficulty": "hard"
+      }
+    ]
+  }
+}

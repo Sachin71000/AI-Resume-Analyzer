@@ -1,0 +1,35 @@
+{
+  "strong": [
+    "achieved", "architected", "automated", "built", "championed",
+    "consolidated", "created", "decreased", "delivered", "designed",
+    "developed", "directed", "drove", "eliminated", "enabled",
+    "engineered", "established", "exceeded", "executed", "expanded",
+    "generated", "grew", "implemented", "improved", "increased",
+    "initiated", "integrated", "introduced", "launched", "led",
+    "managed", "maximized", "mentored", "migrated", "modernized",
+    "negotiated", "optimized", "orchestrated", "overhauled", "pioneered",
+    "planned", "produced", "propelled", "reduced", "refactored",
+    "reengineered", "resolved", "restructured", "revamped", "scaled",
+    "secured", "simplified", "spearheaded", "streamlined", "strengthened",
+    "surpassed", "transformed", "unified"
+  ],
+  "moderate": [
+    "administered", "analyzed", "arranged", "assembled", "assessed",
+    "assisted", "collaborated", "communicated", "compiled", "configured",
+    "contributed", "coordinated", "customized", "debugged", "documented",
+    "enhanced", "evaluated", "examined", "facilitated", "formulated",
+    "handled", "identified", "inspected", "investigated", "maintained",
+    "monitored", "operated", "organized", "participated", "performed",
+    "prepared", "presented", "processed", "programmed", "provided",
+    "recommended", "reported", "researched", "reviewed", "scheduled",
+    "supported", "tested", "tracked", "trained", "troubleshot",
+    "updated", "utilized", "validated", "verified"
+  ],
+  "weak": [
+    "aided", "answered", "attempted", "attended", "completed",
+    "did", "entered", "filed", "followed", "helped",
+    "learned", "listed", "made", "observed", "obtained",
+    "received", "served", "studied", "tried", "used",
+    "watched", "worked", "wrote"
+  ]
+}

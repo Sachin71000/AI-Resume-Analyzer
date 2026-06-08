@@ -1,0 +1,108 @@
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+backend/venv/
+
+# ========================
+# Environment & Secrets
+# ========================
+.env
+backend/.env
+
+# ========================
+# Database
+# ========================
+backend/instance/
+*.db
+*.sqlite3
+
+# ========================
+# Uploads (user files)
+# ========================
+backend/uploads/
+
+# ========================
+# Node.js / Frontend
+# ========================
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# ========================
+# IDE & Editor
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ========================
+# OS Files
+# ========================
+.DS_Store
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+
+# ========================
+# Testing & Reports
+# ========================
+test_report.pdf
+test_report2.pdf
+test_report3.pdf
+test_resume.pdf
+test_resume.txt
+test_resume_v2.pdf
+backend/test_resume.docx
+backend/sample_resume.docx
+backend/sample_jd.txt
+backend/analysis_result.json
+report_images/
+Smart_Resume_Analyzer_Report.docx
+
+# ========================
+# AI Agent / Tool Configs
+# ========================
+.code-review-graph/
+.claude/
+.cursor/
+.cursorrules
+.kiro/
+.mcp.json
+.opencode.json
+.windsurfrules
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+
+# ========================
+# Cache
+# ========================
+backend/data/cache/
+.pytest_cache/
+*.pyc
+
+# ========================
+# Logs
+# ========================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

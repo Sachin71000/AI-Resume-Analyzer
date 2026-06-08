@@ -1,0 +1,14 @@
+flask>=3.0
+flask-cors>=4.0
+flask-sqlalchemy>=3.1
+python-dotenv>=1.0
+pdfplumber>=0.10
+python-docx>=1.1
+spacy>=3.7
+scikit-learn>=1.4
+pandas>=2.1
+google-genai>=1.0
+pydantic>=2.0
+fpdf2>=2.7
+pyspellchecker>=0.8.1
+textstat>=0.7.3
