@@ -83,11 +83,11 @@ class MatchingEngine:
         )
 
         return MatchResult(
-            overall_score=overall,
-            tfidf_score=tfidf_score,
-            semantic_score=semantic_score,
-            skill_match_score=skill_match_pct,
-            section_coverage_score=section_coverage_pct,
-            keyword_density_score=keyword_density,
+            overall_score=float(overall),
+            tfidf_score=float(tfidf_score),
+            semantic_score=float(semantic_score),
+            skill_match_score=float(skill_match_pct),
+            section_coverage_score=float(section_coverage_pct),
+            keyword_density_score=float(keyword_density),
             top_keywords=top_keywords
         )

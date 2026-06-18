@@ -61,7 +61,7 @@ class TextPreprocessor:
             vectorizer = TfidfVectorizer()
             tfidf = vectorizer.fit_transform([text1.lower(), text2.lower()])
             sim = cosine_similarity(tfidf[0:1], tfidf[1:2])[0][0]
-            return round(max(0.0, sim) * 100, 2)
+            return float(round(max(0.0, sim) * 100, 2))
         except Exception:
             return 0.0
 
