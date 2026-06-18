@@ -19,6 +19,18 @@ export default function InterviewPage() {
   // Core state
   const [currentQuestion, setCurrentQuestion] = useState<InterviewQuestion | null>(null);
   const [answerText, setAnswerText] = useState<string>('');
+  // Sync answerText to ref for stale-closure-safe timer access
+  // Accepts both string value and functional updater (like React setState)
+  const setAnswerTextSafe = (textOrUpdater: string | ((prev: string) => string)) => {
+    if (typeof textOrUpdater === 'function') {
+      const newVal = textOrUpdater(answerTextRef.current);
+      answerTextRef.current = newVal;
+      setAnswerText(newVal);
+    } else {
+      answerTextRef.current = textOrUpdater;
+      setAnswerText(textOrUpdater);
+    }
+  };
   const [questionIndex, setQuestionIndex] = useState<number>(1);
   const [timeRemaining, setTimeRemaining] = useState<number>(180); // 3 minutes standard per Q
   const [isLastQuestion, setIsLastQuestion] = useState<boolean>(false);
@@ -29,6 +41,8 @@ export default function InterviewPage() {
 
   // Timer Ref
   const timerRef = useRef<any>(null);
+  // F3 FIX: Track answer text in a ref so timer callback always has fresh value
+  const answerTextRef = useRef<string>('');
 
   // Voice Recognition States & Refs
   const [isListening, setIsListening] = useState<boolean>(false);
@@ -87,7 +101,8 @@ export default function InterviewPage() {
           }
         }
         if (finalTranscript) {
-          setAnswerText(prev => (prev.trim() + ' ' + finalTranscript.trim()).trim());
+          // F3 FIX: Use setAnswerTextSafe so answerTextRef stays in sync with voice input
+          setAnswerTextSafe(prev => (prev.trim() + ' ' + finalTranscript.trim()).trim());
         }
       };
 
@@ -104,10 +119,13 @@ export default function InterviewPage() {
     }
   }, []);
 
+  // F1 FIX: Better session recovery with actionable error message
   const fetchQuestionDirectly = async () => {
-    // If state wasn't passed, we can complete and evaluate since session was likely active or lost
-    // For safety, let's suggest navigating back to setup if session details aren't found
-    setError("Could not restore session state. Please navigate from resume results.");
+    setError(
+      "Session state could not be restored after page refresh. " +
+      "Your progress up to this point is saved. Please go back to your resume results " +
+      "and resume or start a new session."
+    );
   };
 
   const toggleListening = () => {
@@ -129,13 +147,14 @@ export default function InterviewPage() {
     }
   };
 
+  // F3 FIX: Read fresh answer from ref, not stale closure state
   const handleAutoSubmit = () => {
-    handleSubmit(true);
+    handleSubmit(true, answerTextRef.current);
   };
 
-  const handleSubmit = async (isTimeExpired = false) => {
+  // F3 FIX: Accept explicit answerOverride param to avoid stale state in timer callback
+  const handleSubmit = async (isTimeExpired = false, answerOverride?: string) => {
     if (isTimeExpired) {
-      // Intended for auto-submit behavior on timer end
       console.log("Submitting automatically due to timer expiration.");
     }
     if (!sessionId || !currentQuestion) return;
@@ -150,15 +169,17 @@ export default function InterviewPage() {
     setError(null);
 
     const timeTaken = 180 - timeRemaining;
+    // Use override (from timer/skip) or current state
+    const finalAnswer = answerOverride !== undefined ? answerOverride : answerTextRef.current;
 
     try {
       const res = await submitAnswer(
         sessionId,
-        answerText,
+        finalAnswer,
         timeTaken
       );
 
-      setAnswerText(''); // clear text area
+      setAnswerTextSafe(''); // clear text area
 
       if (res.is_last || !res.next_question) {
         // Trigger batch evaluation
@@ -177,12 +198,11 @@ export default function InterviewPage() {
     }
   };
 
+  // F2 FIX: Pass the skip answer directly instead of relying on setState+timeout
   const handleSkip = () => {
-    setAnswerText("Gave no answer.");
-    // Wait a brief tick for state to register or just submit immediately
-    setTimeout(() => {
-      handleSubmit();
-    }, 100);
+    const skipAnswer = "(Skipped — no answer provided)";
+    setAnswerTextSafe(skipAnswer);
+    handleSubmit(false, skipAnswer);
   };
 
   const triggerBatchEvaluation = async () => {
@@ -356,7 +376,7 @@ export default function InterviewPage() {
         <div className="relative">
           <textarea
             value={answerText}
-            onChange={(e) => setAnswerText(e.target.value)}
+            onChange={(e) => setAnswerTextSafe(e.target.value)}
             disabled={loadingSubmit}
             placeholder="Structure your thoughts clearly. Use technical terms and outline trade-offs where applicable..."
             className="w-full bg-black/25 border border-white/10 rounded-2xl p-4 min-h-[220px] text-slate-200 focus:outline-none focus:border-brand/40 transition-colors leading-relaxed text-sm placeholder:text-slate-600 focus:ring-1 focus:ring-brand/20"

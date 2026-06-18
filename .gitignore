@@ -106,3 +106,26 @@ backend/data/cache/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# ========================
+# Production Secrets
+# ========================
+backend/.env.production
+.env.production
+*.pem
+*.key
+*.crt
+
+# ========================
+# Coverage / Test Artifacts
+# ========================
+htmlcov/
+.coverage
+coverage.xml
+backend/coverage.xml
+.pytest_cache/
+
+# ========================
+# Docker
+# ========================
+docker-compose.override.yml

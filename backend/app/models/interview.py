@@ -2,6 +2,7 @@ from datetime import datetime
 from uuid import uuid4
 from ..extensions import db
 
+
 class InterviewSession(db.Model):
     __tablename__ = 'interview_sessions'
 
@@ -14,6 +15,9 @@ class InterviewSession(db.Model):
     questions_json = db.Column(db.JSON, nullable=False)       # List of generated questions dicts
     overall_score = db.Column(db.Float, nullable=True)
     results_json = db.Column(db.JSON, nullable=True)          # Overall feedback, strengths, weaknesses, etc.
+    # Phase 2 additions: topic rotation + adaptive difficulty state
+    topic_rotation_state = db.Column(db.JSON, nullable=True)
+    difficulty_history = db.Column(db.JSON, nullable=True, default=list)
     started_at = db.Column(db.DateTime, default=datetime.utcnow)
     completed_at = db.Column(db.DateTime, nullable=True)
 
@@ -31,6 +35,7 @@ class InterviewSession(db.Model):
             "started_at": self.started_at.isoformat(),
             "completed_at": self.completed_at.isoformat() if self.completed_at else None
         }
+
 
 class InterviewAnswer(db.Model):
     __tablename__ = 'interview_answers'
@@ -69,3 +74,23 @@ class InterviewAnswer(db.Model):
             "time_taken_seconds": self.time_taken_seconds,
             "answered_at": self.answered_at.isoformat()
         }
+
+
+class AskedQuestionLog(db.Model):
+    """
+    Persists question hashes across sessions for cross-session deduplication.
+    The DeduplicationEngine reads this table to prevent re-asking questions
+    in future sessions on the same resume analysis.
+    """
+    __tablename__ = 'asked_question_log'
+
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid4()))
+    analysis_id = db.Column(db.String(36), db.ForeignKey('analysis.id'), nullable=False, index=True)
+    question_hash = db.Column(db.String(16), nullable=False, index=True)
+    question_text = db.Column(db.Text, nullable=True)          # First 500 chars for Gemini context injection
+    topic = db.Column(db.String(50), nullable=True)
+    asked_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    __table_args__ = (
+        db.UniqueConstraint('analysis_id', 'question_hash', name='uq_analysis_question_hash'),
+    )

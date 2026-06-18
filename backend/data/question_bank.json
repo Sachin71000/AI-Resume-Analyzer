@@ -168,6 +168,150 @@
       "keywords": ["conflict", "resolution", "listening", "empathy", "compromise", "collaboration", "STAR"],
       "category": "Collaboration",
       "difficulty": "medium"
+    },
+    {
+      "id": "bh_3",
+      "question": "Describe a time you identified and fixed a critical bug or issue in production. What was your process?",
+      "ideal_answer": "Walk through the STAR framework: the Situation (production incident, severity, user impact), Task (your responsibility to diagnose and resolve), Action (systematic debugging: logs, monitoring alerts, reproducing locally, root cause analysis, hot fix, post-mortem), and Result (system restored, incident documented, process improvements made). Key qualities shown: calmness under pressure, systematic problem-solving, communication with team.",
+      "keywords": ["production", "incident", "root cause", "debugging", "logs", "monitoring", "post-mortem", "systematic"],
+      "category": "Problem Solving",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_4",
+      "question": "Tell me about a project where you had to make a significant technical decision under uncertainty. What was your approach?",
+      "ideal_answer": "Strong answer: identify the decision context (build vs buy, technology choice, architecture pivot), explain how you gathered data (prototyping, benchmarking, team consultation, research), weighed risks and tradeoffs, made a decision with clear rationale, communicated it to stakeholders, and how the decision played out. Demonstrates engineering judgment and ownership.",
+      "keywords": ["decision", "uncertainty", "tradeoffs", "prototyping", "risks", "stakeholders", "rationale", "ownership"],
+      "category": "Technical Leadership",
+      "difficulty": "hard"
+    },
+    {
+      "id": "bh_5",
+      "question": "Give me an example of a time when you improved a process or workflow that saved time or resources for your team.",
+      "ideal_answer": "Detail the inefficiency you identified (manual process, repeated friction, slow pipeline), your Task (owned improving it), Action (measured baseline, designed solution, piloted, iterated, rolled out), Result (quantify: time saved, error reduction, team productivity increase). Shows initiative and systems thinking.",
+      "keywords": ["process improvement", "efficiency", "initiative", "measure", "quantify", "automation", "friction"],
+      "category": "Impact & Efficiency",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_6",
+      "question": "Tell me about a time when you had to deliver a project under a very tight deadline. How did you prioritize and manage the pressure?",
+      "ideal_answer": "STAR: Situation (tight deadline context), Task, Action (ruthless prioritization of MVP requirements, cut scope clearly, communicated tradeoffs to stakeholders, worked in focused sprints, asked for help proactively), Result (on-time delivery with quality maintained, or respectful re-negotiation of scope). Shows time management and stakeholder communication.",
+      "keywords": ["deadline", "prioritization", "MVP", "scope", "communication", "sprints", "time management"],
+      "category": "Time Management",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_7",
+      "question": "Describe a time you disagreed with your manager or senior engineer's technical approach. What did you do?",
+      "ideal_answer": "STAR: the technical disagreement, your Task (constructively raise concern without undermining authority), Action (prepared data/evidence for your position, requested a 1:1, used 'disagree and commit' principle, presented alternatives with trade-offs, ultimately aligned on the best path), Result (outcome—either your approach was adopted, or you committed to their decision with respect). Shows maturity and communication.",
+      "keywords": ["disagree", "commit", "evidence", "trade-offs", "constructive", "authority", "maturity"],
+      "category": "Communication",
+      "difficulty": "hard"
+    },
+    {
+      "id": "bh_8",
+      "question": "Tell me about a time you took ownership of a project or problem that was outside your formal responsibility.",
+      "ideal_answer": "STAR: explain what the gap or problem was (no one owning it, falling through cracks), why you chose to step in, how you took initiative (identified stakeholders, defined scope, drove to resolution), what the Result was. Shows ownership mindset, bias for action—critical at senior levels.",
+      "keywords": ["ownership", "initiative", "stakeholders", "bias for action", "gap", "responsibility", "proactive"],
+      "category": "Ownership",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_9",
+      "question": "Describe a situation where you had to work with incomplete or ambiguous requirements. How did you handle it?",
+      "ideal_answer": "STAR: requirements were unclear/changing. Task: still needed to deliver. Action: clarified assumptions with stakeholders, documented them, built iteratively with feedback loops, used prototypes to validate understanding, communicated risks of ambiguity early. Result: delivered something valuable despite uncertainty. Shows adaptability and communication.",
+      "keywords": ["ambiguity", "assumptions", "iterate", "prototype", "stakeholder", "feedback", "uncertainty", "clarify"],
+      "category": "Adaptability",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_10",
+      "question": "Tell me about a time you mentored or helped a junior engineer grow. What was your approach?",
+      "ideal_answer": "STAR: junior teammate struggling or onboarding. Task: accelerate their growth. Action: pair programming, code reviews with explanations, shared resources, set incremental challenges, gave encouragement, held regular check-ins, encouraged questions without judgment. Result: measurable improvement in their output/confidence. Shows communication, empathy, and leadership.",
+      "keywords": ["mentoring", "growth", "pair programming", "code review", "encouragement", "leadership", "empathy"],
+      "category": "Leadership & Mentoring",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_11",
+      "question": "Tell me about the most impactful project you have ever worked on. What made it impactful?",
+      "ideal_answer": "STAR: set context clearly (scale, users, business impact), explain your specific technical contributions vs team contributions, quantify the impact (users affected, revenue generated/saved, latency improved, cost reduced), explain what YOU specifically built, and reflect on what made it most meaningful to you. Strong answers have concrete numbers.",
+      "keywords": ["impact", "scale", "quantify", "contribution", "business", "metrics", "users"],
+      "category": "Impact",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bh_12",
+      "question": "Describe a time you received critical feedback about your work. How did you respond to it?",
+      "ideal_answer": "STAR: feedback received (code review, performance review, manager feedback). Task: process and act on it. Action: didn't get defensive, actively listened, asked clarifying questions to understand the concern, thanked the reviewer, created an action plan, followed through. Result: improved code quality / relationship / skill. Shows growth mindset and emotional maturity.",
+      "keywords": ["feedback", "growth mindset", "action plan", "defensive", "improvement", "maturity", "listening"],
+      "category": "Growth Mindset",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bh_13",
+      "question": "Give an example of a time when you had to balance multiple competing priorities. How did you decide what to focus on?",
+      "ideal_answer": "STAR: multiple high-priority tasks competing for time. Task: deliver on all or negotiate scope. Action: used a prioritization framework (impact vs effort, deadlines, stakeholder importance), communicated openly about what could slip, negotiated deadlines where possible, time-boxed focused work blocks. Result: completed highest-impact work, with stakeholders aligned on tradeoffs. Shows judgment and communication.",
+      "keywords": ["prioritization", "competing", "framework", "negotiate", "impact", "deadlines", "judgment"],
+      "category": "Time Management",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_14",
+      "question": "Tell me about a time you failed at something. What did you learn from it?",
+      "ideal_answer": "Strong STAR answers: honest about the failure (not a humble-brag fake failure), clear on what went wrong (process, communication, technical decision), owned the failure without blaming others, describe concrete lessons learned, and how those lessons changed your behavior afterward. Shows psychological safety, honesty, and growth mindset.",
+      "keywords": ["failure", "lesson", "ownership", "honest", "process", "growth", "behavior change"],
+      "category": "Growth Mindset",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_15",
+      "question": "Describe a situation where you had to persuade others to adopt a new technology or approach they were resistant to.",
+      "ideal_answer": "STAR: identified a better approach but faced resistance. Task: drive adoption. Action: built a prototype or proof of concept, gathered data on benefits, addressed concerns directly, started with a small pilot, shared results, got champions on board, gave others ownership of the rollout. Result: adopted successfully. Shows technical leadership and communication.",
+      "keywords": ["persuasion", "adoption", "prototype", "proof of concept", "resistance", "pilot", "champion"],
+      "category": "Technical Leadership",
+      "difficulty": "hard"
+    },
+    {
+      "id": "bh_16",
+      "question": "Tell me about a time you had to collaborate cross-functionally with non-engineering teams (product, design, QA, business). What challenges did you face?",
+      "ideal_answer": "STAR: cross-functional project context. Challenges: different vocabulary, priorities, and success metrics. Action: translated technical constraints into business impact, built empathy for their goals, found shared language, over-communicated status and risks, included them in technical decisions where needed. Result: successful collaboration and delivery. Shows business awareness and communication.",
+      "keywords": ["cross-functional", "stakeholder", "communicate", "translate", "empathy", "business impact", "shared language"],
+      "category": "Collaboration",
+      "difficulty": "medium"
+    },
+    {
+      "id": "bh_17",
+      "question": "Describe a time when you had to make a decision without all the information you needed. How did you handle the uncertainty?",
+      "ideal_answer": "STAR: incomplete information, time-sensitive decision. Action: identify what information IS available, make explicit assumptions, assess reversibility of the decision (prefer reversible actions under uncertainty), set decision timeline, make the call, monitor outcomes, adjust quickly if wrong. Result: good outcome or effective course correction. Shows decisiveness and risk management.",
+      "keywords": ["uncertainty", "assumptions", "reversible", "decision", "monitor", "adjust", "risk", "judgment"],
+      "category": "Decision Making",
+      "difficulty": "hard"
+    },
+    {
+      "id": "bh_18",
+      "question": "Tell me about a time when you improved the reliability or observability of a system you worked on.",
+      "ideal_answer": "STAR: system had reliability issues (downtime, unclear failures, no alerting). Task: improve operational health. Action: added structured logging, distributed tracing, metrics/dashboards, alert thresholds, wrote runbooks, improved error handling, added circuit breakers or retries. Result: MTTD/MTTR improved, incidents reduced. Shows production-mindedness and SRE thinking.",
+      "keywords": ["reliability", "observability", "logging", "tracing", "metrics", "alerting", "MTTD", "MTTR"],
+      "category": "Reliability Engineering",
+      "difficulty": "hard"
+    },
+    {
+      "id": "bh_19",
+      "question": "Give an example of when you went above and beyond what was expected of you in a role.",
+      "ideal_answer": "STAR: clear baseline expectation was set, but you identified something more valuable you could deliver. Action: proactively did extra work (improving documentation, fixing a related bug, building a reusable component, unblocking teammates), explained value added. Result: recognized positive impact beyond your immediate scope. Shows initiative and customer/product empathy.",
+      "keywords": ["above and beyond", "proactive", "initiative", "impact", "customer", "empathy", "reusable"],
+      "category": "Ownership",
+      "difficulty": "easy"
+    },
+    {
+      "id": "bh_20",
+      "question": "Describe a time you had to quickly onboard to a new codebase or system. How did you get up to speed?",
+      "ideal_answer": "STAR: new team/codebase/system. Action: read documentation first, traced execution paths of key flows, ran tests to understand expected behavior, drew architecture diagrams, asked targeted questions (not general ones), pair programmed with team members, made small intentional changes to observe effects, built a mental model incrementally. Result: became productive within a specific timeframe. Shows self-direction and learning efficiency.",
+      "keywords": ["onboarding", "codebase", "documentation", "trace", "tests", "architecture", "mental model"],
+      "category": "Adaptability",
+      "difficulty": "easy"
     }
   ],
   "role_based": {

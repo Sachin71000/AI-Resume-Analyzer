@@ -74,7 +74,8 @@ def analyze_improve():
             
             # Since this is an improvement, compute the delta if possible
             from ..models.analysis import Analysis
-            parent = Analysis.query.get(parent_id)
+            from ..extensions import db
+            parent = db.session.get(Analysis, parent_id)
             delta = None
             
             if parent:

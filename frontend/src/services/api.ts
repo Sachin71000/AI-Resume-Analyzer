@@ -1,8 +1,10 @@
 import axios from 'axios';
 import type { AnalysisResponse } from '../types';
 
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
+
 const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE,
 });
 
 export const analyzeResume = async (file: File, jdText: string): Promise<AnalysisResponse> => {
@@ -69,7 +71,7 @@ export const compareAnalyses = async (ids: string[]) => {
 };
 
 export const downloadPDF = (id: string) => {
-  window.open(`/api/export/${id}`, '_blank');
+  window.open(`${API_BASE}/export/${id}`, '_blank');
 };
 
 export const startInterview = async (
