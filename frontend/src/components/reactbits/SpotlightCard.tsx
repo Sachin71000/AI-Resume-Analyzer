@@ -12,7 +12,6 @@ export const SpotlightCard = ({
   children,
   className = '',
   spotlightColor = 'rgba(99, 102, 241, 0.08)',
-  glowColor,
 }: SpotlightCardProps) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);

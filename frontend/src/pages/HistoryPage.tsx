@@ -7,7 +7,6 @@ import {
   Search, ChevronDown, Trash2, ArrowRightLeft, FileText,
   ChevronLeft, ChevronRight, Clock, Trash, CheckCircle2, TrendingUp
 } from 'lucide-react';
-import { SpotlightCard } from '../components/reactbits/SpotlightCard';
 
 const containerVariants = {
   hidden: { opacity: 0 },

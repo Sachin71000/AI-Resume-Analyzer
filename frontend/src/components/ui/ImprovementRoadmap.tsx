@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { ChevronDown, Sparkles, CheckCircle2, AlertTriangle, ArrowRight, Target, Zap } from 'lucide-react';
+import { ChevronDown, Sparkles, CheckCircle2, ArrowRight, Target, Zap } from 'lucide-react';
 import type { SuggestionItem } from '../../types';
 
 interface RoadmapProps {

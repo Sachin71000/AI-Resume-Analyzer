@@ -17,18 +17,15 @@ export const ScoreGauge = ({ score, label, size = 200, strokeWidth = 14 }: Score
   let gradientStart = '#10b981';
   let gradientEnd = '#34d399';
   let glowColor = 'rgba(16,185,129,0.5)';
-  let labelColor = '#10b981';
   
   if (score < 50) {
     gradientStart = '#ef4444';
     gradientEnd = '#f87171';
     glowColor = 'rgba(239,68,68,0.4)';
-    labelColor = '#ef4444';
   } else if (score < 75) {
     gradientStart = '#f59e0b';
     gradientEnd = '#fcd34d';
     glowColor = 'rgba(245,158,11,0.4)';
-    labelColor = '#f59e0b';
   }
 
   const gradientId = `gauge-gradient-${Math.round(score)}`;
