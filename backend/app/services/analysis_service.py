@@ -37,13 +37,50 @@ def _sanitize_for_db(obj):
         return obj.tolist()
     return obj
 
-# Initialize singletons for expensive NLP setup
-_preprocessor = TextPreprocessor()
-_skill_extractor = SkillExtractor()
-_quality_analyzer = QualityAnalyzer()
-_ats_scorer = ATSScorer()
-_bullet_analyzer = BulletAnalyzer()
-_experience_grader = ExperienceGrader()
+# Lazy-loaded singletons — initialized on first request to avoid OOM at gunicorn startup
+# (Render free tier is 512MB; loading 6 NLP models at import time kills the worker)
+_preprocessor = None
+_skill_extractor = None
+_quality_analyzer = None
+_ats_scorer = None
+_bullet_analyzer = None
+_experience_grader = None
+
+def _get_preprocessor():
+    global _preprocessor
+    if _preprocessor is None:
+        _preprocessor = TextPreprocessor()
+    return _preprocessor
+
+def _get_skill_extractor():
+    global _skill_extractor
+    if _skill_extractor is None:
+        _skill_extractor = SkillExtractor()
+    return _skill_extractor
+
+def _get_quality_analyzer():
+    global _quality_analyzer
+    if _quality_analyzer is None:
+        _quality_analyzer = QualityAnalyzer()
+    return _quality_analyzer
+
+def _get_ats_scorer():
+    global _ats_scorer
+    if _ats_scorer is None:
+        _ats_scorer = ATSScorer()
+    return _ats_scorer
+
+def _get_bullet_analyzer():
+    global _bullet_analyzer
+    if _bullet_analyzer is None:
+        _bullet_analyzer = BulletAnalyzer()
+    return _bullet_analyzer
+
+def _get_experience_grader():
+    global _experience_grader
+    if _experience_grader is None:
+        _experience_grader = ExperienceGrader()
+    return _experience_grader
 
 class AnalysisService:
     @staticmethod
@@ -53,13 +90,21 @@ class AnalysisService:
         Extracts logic from the API route.
         """
         try:
+            # Lazy-load NLP singletons on first request
+            preprocessor = _get_preprocessor()
+            skill_extractor = _get_skill_extractor()
+            quality_analyzer = _get_quality_analyzer()
+            ats_scorer = _get_ats_scorer()
+            bullet_analyzer = _get_bullet_analyzer()
+            experience_grader = _get_experience_grader()
+
             # 1. Parse Document
             parsed_data = ResumeParser.parse(file_path)
             resume_raw_text = parsed_data['text']
 
             # 2. Preprocess
-            resume_processed = _preprocessor.preprocess(resume_raw_text)
-            jd_processed = _preprocessor.preprocess(jd_text)
+            resume_processed = preprocessor.preprocess(resume_raw_text)
+            jd_processed = preprocessor.preprocess(jd_text)
 
             # 3. Cache Check
             cache_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data', 'cache')
@@ -133,7 +178,7 @@ class AnalysisService:
                 if hasattr(parsed_jd, 'preferred_skills'):
                     jd_compare_text += ' ' + ' '.join(parsed_jd.preferred_skills)
 
-            skills_data = _skill_extractor.compare_skills(
+            skills_data = skill_extractor.compare_skills(
                 resume_text=resume_processed['raw_clean'],
                 jd_text=jd_compare_text,
                 sections=sections,
@@ -141,13 +186,13 @@ class AnalysisService:
             )
 
             # 7. Quality Analysis
-            quality_data = _quality_analyzer.analyze(resume_raw_text, sections)
+            quality_data = quality_analyzer.analyze(resume_raw_text, sections)
 
             # 8. ATS Compatibility Score
-            ats_data = _ats_scorer.score(resume_raw_text, jd_text, sections, skills_data, quality_data)
+            ats_data = ats_scorer.score(resume_raw_text, jd_text, sections, skills_data, quality_data)
 
             # 9. Hybrid Match Score
-            semantic_score = _preprocessor.compute_similarity(resume_processed['raw_clean'], jd_compare_text)
+            semantic_score = preprocessor.compute_similarity(resume_processed['raw_clean'], jd_compare_text)
             
             match_result = MatchingEngine.compute_match(
                 resume_text=resume_processed['processed'],
@@ -158,8 +203,8 @@ class AnalysisService:
             )
 
             # 10. Generate Suggestions (Rule-based)
-            bullet_data = _bullet_analyzer.analyze(resume_raw_text)
-            exp_data = _experience_grader.analyze(resume_raw_text, jd_text)
+            bullet_data = bullet_analyzer.analyze(resume_raw_text)
+            exp_data = experience_grader.analyze(resume_raw_text, jd_text)
             
             rule_based_suggestions = SuggestionGenerator.generate(
                 skills_data=skills_data,
