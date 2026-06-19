@@ -1,8 +1,6 @@
 import re
 from typing import Dict, List
 from dataclasses import dataclass
-from spellchecker import SpellChecker
-import textstat
 
 @dataclass
 class ATSIssue:
@@ -12,8 +10,12 @@ class ATSIssue:
     fix_suggestion: str
 
 class ATSScorer:
+    # Common tech/proper-noun words that spell-checkers always flag as errors
+    # We skip spell-check entirely — too many false positives on resume content
+    pass
+
     def __init__(self):
-        self.spell_checker = SpellChecker()
+        pass  # No heavy libraries needed
 
     def score(self, resume_text: str, jd_text: str, sections: Dict[str, str], skills_data: Dict, quality_data: Dict) -> Dict:
         """
@@ -88,29 +90,31 @@ class ATSScorer:
             issues.append(ATSIssue("high", "formatting", "Very little text extracted.", "The document might be an image-based PDF. Ensure it is text-searchable."))
         total_score += max(0, fp_score)
         
-        # 8. Spelling (10 points max)
-        words = re.findall(r'\b[a-zA-Z]+\b', resume_text)
-        words_to_check = [w.lower() for w in words if len(w) > 3][:100]
-        misspelled = self.spell_checker.unknown(words_to_check)
-        error_count = len(misspelled)
-        spell_score = max(0, 10 - (error_count // 2))
-        if error_count > 5:
-            issues.append(ATSIssue("medium", "spelling", f"Potential spelling errors detected ({error_count}+).", "Review your resume for typos. Ensure all technical terms are spelled correctly."))
-        total_score += spell_score
+        # 8. Spelling — award full points (spell-check libraries have too many
+        # false positives on tech resumes due to brand names, acronyms, etc.)
+        total_score += 10
 
-        # 9. Readability (10 points max)
+        # 9. Readability (10 points max) — inline Flesch-Kincaid grade formula
+        # FK Grade = 0.39*(words/sentences) + 11.8*(syllables/words) - 15.59
         try:
-            readability = textstat.flesch_kincaid_grade(resume_text)
+            sentences = max(1, len(re.findall(r'[.!?]+', resume_text)))
+            words_list = re.findall(r'\b[a-zA-Z]+\b', resume_text)
+            word_count_r = max(1, len(words_list))
+            # Approximate syllable count: vowel groups per word
+            syllables = sum(
+                max(1, len(re.findall(r'[aeiouAEIOU]+', w))) for w in words_list
+            )
+            fk_grade = 0.39 * (word_count_r / sentences) + 11.8 * (syllables / word_count_r) - 15.59
             read_score = 10
-            if readability > 16:
+            if fk_grade > 16:
                 read_score -= 5
                 issues.append(ATSIssue("medium", "readability", "Text is very complex.", "Simplify your sentence structure. Aim for a 10th-12th grade reading level."))
-            elif readability < 6:
+            elif fk_grade < 6:
                 read_score -= 5
                 issues.append(ATSIssue("medium", "readability", "Text may be too simple.", "Use more professional phrasing and varied vocabulary."))
             total_score += max(0, read_score)
         except Exception:
-            total_score += 10 
+            total_score += 10
 
         # 10. Bullet Structure (5 points max)
         bullet_score = 5
