@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import uuid4
 from ..extensions import db
 
@@ -18,7 +18,7 @@ class InterviewSession(db.Model):
     # Phase 2 additions: topic rotation + adaptive difficulty state
     topic_rotation_state = db.Column(db.JSON, nullable=True)
     difficulty_history = db.Column(db.JSON, nullable=True, default=list)
-    started_at = db.Column(db.DateTime, default=datetime.utcnow)
+    started_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     completed_at = db.Column(db.DateTime, nullable=True)
 
     answers = db.relationship('InterviewAnswer', backref='session', lazy=True, cascade="all, delete-orphan")
@@ -54,7 +54,7 @@ class InterviewAnswer(db.Model):
     gemini_score = db.Column(db.Float, nullable=True)
     feedback_json = db.Column(db.JSON, nullable=True)          # details (strengths, weaknesses, etc.)
     time_taken_seconds = db.Column(db.Integer, nullable=True)
-    answered_at = db.Column(db.DateTime, default=datetime.utcnow)
+    answered_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     def to_dict(self):
         return {
@@ -89,7 +89,7 @@ class AskedQuestionLog(db.Model):
     question_hash = db.Column(db.String(16), nullable=False, index=True)
     question_text = db.Column(db.Text, nullable=True)          # First 500 chars for Gemini context injection
     topic = db.Column(db.String(50), nullable=True)
-    asked_at = db.Column(db.DateTime, default=datetime.utcnow)
+    asked_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     __table_args__ = (
         db.UniqueConstraint('analysis_id', 'question_hash', name='uq_analysis_question_hash'),

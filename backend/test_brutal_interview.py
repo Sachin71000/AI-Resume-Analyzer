@@ -55,7 +55,7 @@ class TestBrutalInterviewCoach(unittest.TestCase):
     def test_brutal_2_extreme_answers(self):
         """Test evaluator with extremely empty, large, and unicode-heavy answers."""
         print("\n[Brutal Test 2] Testing evaluator under extreme inputs...")
-        _, evaluator, _ = InterviewService.get_services()
+        evaluator = Evaluator(gemini_service=None)  # No Gemini in unit tests
         
         question = "Explain standard container orchestration in Kubernetes."
         ideal = "Kubernetes coordinates a highly available cluster of computers that are co-scheduled to work as a single unit."
@@ -84,7 +84,7 @@ class TestBrutalInterviewCoach(unittest.TestCase):
     def test_brutal_3_duplicate_and_weird_keywords(self):
         """Test evaluator with duplicate keywords or punctuation-heavy ideal answers."""
         print("\n[Brutal Test 3] Testing evaluator with duplicate & noisy keywords...")
-        _, evaluator, _ = InterviewService.get_services()
+        evaluator = Evaluator(gemini_service=None)
         
         question = "What is SQL?"
         ideal = "... ,,, !!!"
@@ -125,7 +125,7 @@ class TestBrutalInterviewCoach(unittest.TestCase):
         )
         
         # Assertions
-        session = InterviewSession.query.get(session_id)
+        session = db.session.get(InterviewSession, session_id)
         self.assertEqual(len(session.answers), 2)
         self.assertTrue(res2["is_last"])
         

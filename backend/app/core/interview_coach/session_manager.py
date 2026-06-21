@@ -6,7 +6,7 @@ SessionManager — Fixed:
   - New: Passes analysis_id to QuestionGenerator for cross-session deduplication
 """
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from ...extensions import db
 from ...models.interview import InterviewSession, InterviewAnswer
 from .question_generator import QuestionGenerator
@@ -60,7 +60,7 @@ class SessionManager:
             questions_json=questions,
             topic_rotation_state=rotator_state,
             difficulty_history=[],
-            started_at=datetime.utcnow(),
+            started_at=datetime.now(timezone.utc),
         )
 
         db.session.add(session)
@@ -130,7 +130,7 @@ class SessionManager:
             user_answer=sanitized_answer,
             ideal_answer=curr_q.get("ideal_answer"),
             time_taken_seconds=time_taken_seconds,
-            answered_at=datetime.utcnow(),
+            answered_at=datetime.now(timezone.utc),
         )
         db.session.add(answer_rec)
 

@@ -1,7 +1,8 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from .similarity import cosine_similarity_texts, _STOPWORDS
 from dataclasses import dataclass, field
 from typing import List, Dict
+import re
+from collections import Counter
 
 @dataclass
 class MatchResult:
@@ -23,27 +24,21 @@ class MatchingEngine:
 
     @staticmethod
     def _compute_tfidf(resume_text: str, jd_text: str) -> tuple:
-        """Compute TF-IDF cosine similarity and extract top keywords."""
+        """Compute cosine similarity and extract top JD keywords (pure Python, no sklearn)."""
         if not resume_text.strip() or not jd_text.strip():
             return 0.0, []
 
-        vectorizer = TfidfVectorizer(stop_words='english')
-        try:
-            tfidf_matrix = vectorizer.fit_transform([resume_text, jd_text])
-            sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])[0][0]
-        except Exception:
-            return 0.0, []
+        sim = cosine_similarity_texts(resume_text, jd_text)
 
-        # Top keywords from JD
+        # Extract top JD keywords by frequency (excluding stopwords)
         try:
-            jd_vector = vectorizer.transform([jd_text]).toarray()[0]
-            feature_names = vectorizer.get_feature_names_out()
-            top_indices = jd_vector.argsort()[::-1][:15]
-            top_keywords = [feature_names[i] for i in top_indices if jd_vector[i] > 0]
+            jd_words = [w for w in re.findall(r'[a-zA-Z]+', jd_text.lower())
+                        if w not in _STOPWORDS and len(w) > 3]
+            top_keywords = [w for w, _ in Counter(jd_words).most_common(15)]
         except Exception:
             top_keywords = []
 
-        return round(sim * 100, 2), top_keywords
+        return round(sim, 2), top_keywords
 
     @staticmethod
     def _compute_keyword_density(resume_text: str, top_keywords: List[str]) -> float:
@@ -64,11 +59,11 @@ class MatchingEngine:
     ) -> MatchResult:
         """
         Compute hybrid match score:
-        - TF-IDF cosine similarity (25%)
-        - Semantic similarity (20%)
-        - Skill overlap (30%)
-        - Section coverage (15%)
-        - Keyword density (10%)
+        - Cosine similarity / 25%
+        - Semantic similarity / 20%
+        - Skill overlap / 30%
+        - Section coverage / 15%
+        - Keyword density / 10%
         """
         tfidf_score, top_keywords = MatchingEngine._compute_tfidf(resume_text, jd_text)
         keyword_density = MatchingEngine._compute_keyword_density(resume_text, top_keywords)

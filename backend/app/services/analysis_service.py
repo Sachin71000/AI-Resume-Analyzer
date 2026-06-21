@@ -21,21 +21,7 @@ from .gemini_service import GeminiService
 from ..models.analysis import Analysis
 from ..extensions import db
 
-import numpy as np
 
-def _sanitize_for_db(obj):
-    """Recursively convert numpy types to native Python types for PostgreSQL."""
-    if isinstance(obj, dict):
-        return {k: _sanitize_for_db(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
-        return [_sanitize_for_db(v) for v in obj]
-    elif isinstance(obj, (np.floating,)):
-        return float(obj)
-    elif isinstance(obj, (np.integer,)):
-        return int(obj)
-    elif isinstance(obj, np.ndarray):
-        return obj.tolist()
-    return obj
 
 # Lazy-loaded singletons — initialized on first request to avoid OOM at gunicorn startup
 # (Render free tier is 512MB; loading 6 NLP models at import time kills the worker)
@@ -288,18 +274,18 @@ class AnalysisService:
             except Exception:
                 pass
 
-            # Save to DB — sanitize numpy types for PostgreSQL compatibility
+            # Save to DB (all values are native Python types — numpy removed)
             analysis = Analysis(
                 resume_filename=filename,
                 resume_text=resume_raw_text,
                 jd_text=jd_text,
                 overall_score=float(match_result.overall_score),
-                scores_json=_sanitize_for_db(scores_json),
-                skills_json=_sanitize_for_db(skills_json),
-                sections_json=_sanitize_for_db(sections_json),
-                quality_json=_sanitize_for_db(quality_json),
-                ats_json=_sanitize_for_db(ats_data),
-                suggestions_json=_sanitize_for_db(suggestions_json),
+                scores_json=scores_json,
+                skills_json=skills_json,
+                sections_json=sections_json,
+                quality_json=quality_json,
+                ats_json=ats_data,
+                suggestions_json=suggestions_json,
                 parent_analysis_id=parent_id
             )
             db.session.add(analysis)

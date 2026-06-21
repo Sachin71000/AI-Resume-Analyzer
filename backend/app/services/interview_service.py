@@ -6,7 +6,7 @@ InterviewService — Fixed:
   - Input validation added for answer submission
 """
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from flask import current_app
 from ..models.analysis import Analysis
 from ..models.interview import InterviewSession, InterviewAnswer
@@ -257,7 +257,7 @@ class InterviewService:
         session.overall_score = report["overall_score"]
         session.results_json = report
         session.status = "completed"
-        session.completed_at = datetime.utcnow()
+        session.completed_at = datetime.now(timezone.utc)
 
         db.session.commit()
 

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from uuid import uuid4
 from ..extensions import db
 
@@ -16,7 +16,7 @@ class Analysis(db.Model):
     suggestions_json = db.Column(db.JSON, nullable=False)
     parent_analysis_id = db.Column(db.String(36), db.ForeignKey('analysis.id'), nullable=True)
     label = db.Column(db.String(255), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     def to_summary(self):
         return {

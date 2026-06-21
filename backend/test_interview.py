@@ -26,8 +26,10 @@ def run_tests():
         print("\n[Test 2] Testing Question Generator...")
         # Since we might not have a Gemini API key loaded in test mode, we pass a dummy key or verify generator fallback
         # Let's inspect active services
-        session_mgr, evaluator, feedback_gen = InterviewService.get_services()
-        q_gen = session_mgr.question_generator
+        from app.core.interview_coach.session_manager import SessionManager
+        q_gen = QuestionGenerator(gemini_service=None)
+        session_mgr = SessionManager(question_generator=q_gen)
+        evaluator = Evaluator(gemini_service=None)
         
         # Test loading question bank
         print(f"  Question bank size: {len(q_gen.question_bank.get('skills', {}))} skills loaded.")

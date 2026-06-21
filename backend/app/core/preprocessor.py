@@ -58,16 +58,7 @@ class TextPreprocessor:
         }
 
     def compute_similarity(self, text1: str, text2: str) -> float:
-        """Compute TF-IDF cosine similarity between two texts."""
-        if not text1.strip() or not text2.strip():
-            return 0.0
-        try:
-            from sklearn.feature_extraction.text import TfidfVectorizer
-            from sklearn.metrics.pairwise import cosine_similarity
-            vectorizer = TfidfVectorizer()
-            tfidf = vectorizer.fit_transform([text1.lower(), text2.lower()])
-            sim = cosine_similarity(tfidf[0:1], tfidf[1:2])[0][0]
-            return float(round(max(0.0, sim) * 100, 2))
-        except Exception:
-            return 0.0
+        """Compute cosine similarity between two texts (pure Python, no sklearn)."""
+        from .similarity import cosine_similarity_texts
+        return cosine_similarity_texts(text1, text2)
 

@@ -1,8 +1,7 @@
 import re
 import logging
 from pydantic import BaseModel, Field
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from ..similarity import cosine_similarity_score_10
 from ...services.gemini_service import GeminiService
 
 logger = logging.getLogger(__name__)
@@ -120,18 +119,13 @@ class Evaluator:
         }
 
     def _compute_tfidf_similarity(self, user_answer: str, ideal_answer: str) -> float:
-        """Compute TF-IDF cosine similarity on a 0-10 scale."""
+        """Compute cosine similarity on 0-10 scale (pure Python, no sklearn)."""
         if not user_answer or not ideal_answer:
             return 0.0
-            
-        vectorizer = TfidfVectorizer(stop_words='english')
         try:
-            tfidf_matrix = vectorizer.fit_transform([user_answer.lower(), ideal_answer.lower()])
-            sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])[0][0]
-            # Convert similarity (0-1) to 0-10 score
-            return min(10.0, sim * 10.0)
+            return cosine_similarity_score_10(user_answer, ideal_answer)
         except Exception as e:
-            logger.error(f"Error computing TF-IDF in evaluation: {e}")
+            logger.error(f"Error computing similarity in evaluation: {e}")
             return 0.0
 
     def _compute_keyword_score(self, user_answer: str, expected_keywords: list[str]) -> tuple[float, list[str]]:
